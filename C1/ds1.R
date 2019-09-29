@@ -121,80 +121,10 @@ str(df)
 df$grades
 df$gender = factor(df$gender, ordered=T, levels=c('M','F'))
 
-df$gender
-#x
-
-
-
-#
-
-students
-df
-df=fix(df)
-df[3:4,1:2]
-df
-df$course
-df$name
-df$gender = c('M','F','M','M')
-df
-str(df)
-df$gender = factor(df$gender)
-str(df)
-df$grades = c('A', 'B', 'A', 'C')
-df
-str(df)
-df$grades = factor(df$grades, ordered=T)
-str(df)
-df$grades
-df$grades = factor(df$grades, ordered=T, levels=c('C','B','A'))
-df$grades
-
-
 
 table(df$course,df$gender)
-mymatrix
-apply(mymatrix, 1, sum)  
-apply(mymatrix, 2, sum)  
-apply(mymatrix, 2, sd)  
-myarray
-apply(myarray, 1, sum)  
-df
-?apply
-df
-tapply(df$marks, df$gender, mean)
-?tapply
-df
-df$gender = NULL
-df
+
+#filter data
 df[df$dept == 'Dept1',]
-df[df$marks >= 80,]
-
-
-#List
-listL1 = list('dhiraj', v1, students, mymatrix, myarray)
-listL1
-
-
-#?ls
-ls()
-rm(list=ls())
-ls()
-
-
-(mylist1 = list( 1, df, v4))
-
-#--
-(myarray = array(101:124, dim=c(4,3,2)))
-
-(myarray = array(1:24, dim=c(3,2,4)))
-
-
-(myarray = array(1:24, dim=c(4,3,2), dimnames = list(c('S1','S2','S3','S4'), c('Sub1','Sub2','Sub3'), c('Dept1','Dept2'))))
-myarray
-apply(myarray,3,sum)
-apply(myarray,2,mean)
-apply(myarray,3,sum)
-apply(myarray,c(2,3),mean)
-apply(myarray,c(1,3),sd)
-apply(myarray,c(1,2),max)
+df[df$marks >= 50,]
 
