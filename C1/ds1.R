@@ -116,11 +116,19 @@ df[,1:3]  # 1 to 3 columns, all rows
 df$name = as.character(df$name)
 str(df)  #see the structure now
 
-df$grades = factor(df$grades, ordered=F, levels=c('A','B','C','D','E','F'))
+#grades can be ordered
+df$grades = factor(df$grades, ordered=T, levels=c('A','B','C','D','E','F'))
 str(df)
 df$grades
-df$gender = factor(df$gender, ordered=T, levels=c('M','F'))
+table(df$grades)  #see the order of display
+#reverse the order : A is highest level
+df$grades = factor(df$grades, ordered=T, levels=c('F','E','D','C','B','A'))
+df$grades
+table(df$grades) # order of display
 
+#gender should not be ordered
+df$gender = factor(df$gender, ordered=F, levels=c('M','F'))
+df$gender
 
 table(df$course,df$gender)
 
