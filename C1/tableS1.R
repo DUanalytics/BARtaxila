@@ -31,3 +31,26 @@ addmargins(A=t1, margin=c(1,2), FUN=c(sum,mean))  #two function on rows/ col mar
 addmargins(A=t1, margin=c(1,2), FUN=list(list(sum,mean, length, mean), list(sd, sum)))
            
            
+
+#prop.table-------
+#proportion of values 
+t1
+prop.table(t1)
+#Cyl4, Gear3 : 1 out of 32 = 3.12%
+1/32
+prop.table(t1, margin=1)  #sum of each row=1
+t1
+#Cyl4, Gear 3 : 1 out of 11 Cyl4 cars : 1/11
+1/11
+prop.table(t1, margin=2)  #sum of each col=1
+#Cyl4, Gear 3 : 1 out of 15 Gear3 cars : 1/15
+1/15
+
+#quick check
+rowSums(prop.table(t1, margin=1))  #correct
+#rowSums(prop.table(t1, margin=2))
+colSums(prop.table(t1, margin=2))
+
+
+
+#end -------------
