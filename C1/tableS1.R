@@ -45,7 +45,7 @@ t1
 prop.table(t1, margin=2)  #sum of each col=1
 #Cyl4, Gear 3 : 1 out of 15 Gear3 cars : 1/15
 1/15
-
+matrix(paste(prop.table(x=t1)*100 , '%', sep=''), ncol=3)
 #quick check
 rowSums(prop.table(t1, margin=1))  #correct
 #rowSums(prop.table(t1, margin=2))
