@@ -6,6 +6,7 @@ mean(v10)
 set.seed(11)
 (v11 = rnorm(n=100, mean=50, sd=10))
 length(v11)
+class(v11)
 min(v11)
 max(v11)
 range(v11)
@@ -17,7 +18,8 @@ round(v11,1)
 floor(v11)
 ceiling(v11)
 
-floor(c(14.56, -14.56)) #lower value
+floor(c(14.56, 14.2, -14.56)) #lower value
+trunc(c(14.56, 14.2, -14.56))
 
 #character Vectors------------------
 set.seed(11)
@@ -26,8 +28,14 @@ length(v12)
 summary(v12)
 table(v12)
 
-#category vectors --------------
+#factors-------
+#category vectors
+v12
 v13 = as.factor(v12)
-summary(v12)
-summary(v13)
+v13  #F before M
+summary(v12)  #character
+summary(v13) #factor
 table(v13)
+
+
+#end ----
