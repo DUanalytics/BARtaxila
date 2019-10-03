@@ -1,4 +1,17 @@
-# Descriptive Analysis : mtcars  using : dplyr
+# Descriptive Analysis & Other summarisation
+# use of dplyr (dataset - mtcars)
+
+library(dplyr)  
+?dplyr
+browseVignettes(package='dplyr')  #see browser
+#cheatsheet on dplyr : RStudio->Help->Cheatsheets
+#some of the functions
+# select(): It is used to select columns of interest from a data set
+# filter(): It filters the data based on a condition
+# arrange(): It is used to arrange data set values on ascending or descending order
+# mutate(): It is used to create new variables from existing variables
+# summarise(with group_by): It is used to perform analysis by commonly used operations such as min, max, mean count etc.
+
 
 df1 = mtcars # make a copy and do analysis on df
 head(df1)
@@ -9,9 +22,9 @@ str(df)
 factorcols = c('cyl','vs', 'am', 'gear', 'carb')
 
 df1[factorcols] = lapply(df1[factorcols] ,factor, ordered=T)
-sapply(df1, class)
+sapply(df1, class) #check the class these cols belong to
 str(df1)
-unique(abbreviate(rownames(df1)))
+unique(abbreviate(rownames(df1))) #abbreviate the carnames
 
 # Now do summarisation
 #attach(df1)
@@ -118,11 +131,12 @@ df1 %>% select(name,mpg, cyl) %>% top_n(1, mpg)
 #Selecting Columns
 names(df1)
 df1 %>% select(1:5)
-df1 %>% select(contains('s'))  %>% head()
-df1 %>% select(starts_with('d')) %>% head()
+df1 %>% select(contains('s'))  %>% head()  #contains
+df1 %>% select(starts_with('d')) %>% head()  #starts with 
+df1 %>% select(-starts_with('d')) %>% head() #does not start with
 df1 %>% select(ends_with('s')) %>% head()
 df1 %>% select(everything()) %>% head()
-#first col is wt
+#put first col is wt
 df1 %>% select(wt, everything()) %>% select(1:5) %>% select(-2) %>% head()
 names(df1)
 
@@ -130,13 +144,14 @@ names(df1)
 # Summarise
 df1 %>% summarise(mpg_ave = mean(mpg))
 df1 %>% group_by(cyl) %>% summarise(mean_ave = mean(mpg),wt_sum = sum(wt))
-df1 %>% group_by(cyl, am) %>% select(numcols) %>% summarise_each( funs(mean))
+df1 %>% group_by(cyl, am) %>% select(numcols, 'cyl','am') %>% summarise_each( funs(mean))
 factorcols
 df1 %>% group_by(cyl, vs) %>% count(am, gear)
 
+#extract only one column as a vector
+mpgcol <- df1 %>% pull(mpg)
 
-
-#Summary Functions
+#Summary Functions : single columns
 v1 = df1$mpg
 v1
 v1 %>% first
@@ -145,5 +160,10 @@ v1 %>% sd
 v1 %>% mean
 v1 %>% n_distinct()
 
+
+
+
+
+#end here------------------------
 
 
