@@ -30,6 +30,10 @@ sweep(m1, MARGIN = 2, STATS=1:6, FUN="-")
 #sweep(m1, MARGIN = 2, STATS=1:6, FUN=c("-","+","-","-",'+',"+"))
 #error
 
-
+#tip: Add means of each column to each value of column
+m1
+(cM1 = colMeans(m1))
+sweep(m1, MARGIN = 2, STATS=cM1, FUN='+')
+61 + 61.4  #lastrow, firstcol
 #end ------
 
