@@ -1,5 +1,4 @@
 #Apply family of functions in R ----
-#kanika & abhinav
 #Why use Apply when for loop is faster
 # Execution time of Apply() fxn is faster then  For Loop.
 # Example:
