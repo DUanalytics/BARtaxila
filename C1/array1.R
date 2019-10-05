@@ -1,5 +1,6 @@
 #arrays
-
+#are like matrix/vectors but with more than 2 dimensions
+#all elements of same data type
 #built in arrays
 UCBAdmissions
 class(UCBAdmissions)
