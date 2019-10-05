@@ -2,8 +2,7 @@
 #ifelse, etc
 
 #If-else statement--------------------------------------------
-# We want to examine whether a variable stored as "quantity" is above 20. 
-# If quantity greater than 20, print "You sold a lot!" otherwise "Not enough for today."
+# We want to examine whether a variable stored as "quantity" is above 20. # If quantity greater than 20, print "You sold a lot!" otherwise "Not enough for today."
 # Create vector quantity
 quantity <-  25
 

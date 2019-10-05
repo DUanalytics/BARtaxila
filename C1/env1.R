@@ -1,5 +1,10 @@
 # R Environment
 
+# = and <- symbol have same effect. in some case we may use <-
+x1 = 5
+x2 <- 5
+x3 <
+
 ls()  #all variables in the environment
 rm(list=ls())  #clean all variables
 #see the env tab : right top pane
