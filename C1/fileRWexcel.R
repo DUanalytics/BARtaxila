@@ -4,6 +4,10 @@
 #it may not work in some Laptops
 
 library(rJava)  # install
+#set this path to your java file: you will find the version of Java in location : C:\Program Files\Java
+#note \\ in path
+Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_221')
+
 library(xlsx)  #install.packages('xlsx')
 
 mtcars
