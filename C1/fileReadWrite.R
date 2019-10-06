@@ -58,4 +58,15 @@ student
 #other types can also be used #eg excel, STATA, SAS 
 #preferred CSV files only
 
+#summary
+mtcars
+# using data folder
+write.csv(x=mtcars, file='data/mtcars5a.csv',row.names = F)
+data5a = read.csv(file='data/mtcars5a.csv')
+head(data5a)
+#Without using data folder
+women
+write.csv(x=women, file='women5b.csv', row.names = F)
+data5b = read.csv(file='women5b.csv')
+head(data5b)
 #end here
