@@ -1,4 +1,5 @@
 #read / write Data - from/to File
+#data can read into R from many file types : most common is CSV
 
 #make sure you have a folder : data in your project directory
 #like c1, c2, c3, c4, c5
@@ -32,11 +33,10 @@ head(taxila)
 #no saving to web directly
 
 #googlesheets
-
+#make sure the google sheet is public sharing ON
 url2 = "https://docs.google.com/spreadsheets/d/1Md_ro2t3M7nA9JMH1DsE12jfeX7qq-UPw6p8WQd6A2Y/edit#gid=216113907"
 #url of gsheet
 library(gsheet)
-
 denco = as.data.frame(gsheet2tbl(url2))
 head(denco)
 
