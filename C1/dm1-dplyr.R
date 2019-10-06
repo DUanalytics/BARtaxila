@@ -5,6 +5,7 @@ library(dplyr)
 ?dplyr
 browseVignettes(package='dplyr')  #see browser
 #cheatsheet on dplyr : RStudio->Help->Cheatsheets
+#https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf   #online Cheatsheet : download and refer
 #some of the functions
 # select(): It is used to select columns of interest from a data set
 # filter(): It filters the data based on a condition
