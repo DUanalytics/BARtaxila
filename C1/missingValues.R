@@ -97,5 +97,12 @@ newDF2
 colSums(is.na(newDF2))
 
 #like this there are many ways of manipulating missing values
+library(gtools) #works on vector of DF
+df=sleep
+df$Dream
+na.replace(df$Dream, mean, na.rm=T)
+na.replace(df$Dream, max, na.rm=T)
+na.replace(df$Dream, median, na.rm=T)
+na.replace(df$Dream, min, na.rm=T)
 
 #end
