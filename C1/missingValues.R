@@ -1,6 +1,5 @@
 #missing values
-#data may be missing for various reasons- not filled, not available, do not want to fill
-#it is important to find these missing values and plan for its remedial measures - impute/ replace, remove those data points, etc
+#data may be missing for various reasons- not filled, not available, do not want to fill #it is important to find these missing values and plan for its remedial measures - impute/ replace, remove those data points, etc
 #missing values in R are indicated by NA
 #when we import from excel / CSV, data may be missing, it is automatically converted to NA
 
@@ -75,6 +74,28 @@ for(i in 1:ncol(df)){
   df[is.na(df[,i]), i] <- mean(df[,i], na.rm = TRUE)
 }
 colSums(is.na(df))
+#using lapply
+df = sleep
+colSums(is.na(df))
+df[] <- lapply(df, function(x) ifelse(is.na(x), mean(x, na.rm = TRUE), x))
+colSums(is.na(df))
 
+#another way
+library(imputeTS)
+df = sleep
+colSums(is.na(df))
+newDF1 = na_mean(df)
+newDF1  #without rownames
+colSums(is.na(newDF1))
+
+#using tidyr
+library(tidyr)
+df=sleep
+colSums(is.na(df))
+newDF2 = replace_na(df,as.list(colMeans(df,na.rm=T)))
+newDF2
+colSums(is.na(newDF2))
+
+#like this there are many ways of manipulating missing values
 
 #end
