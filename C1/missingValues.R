@@ -56,8 +56,8 @@ colSums(is.na(df))  #dream has 12 missing values
 complete.cases(df) #complete cases
 mean(df$Dream, na.rm=T) #mean of Dream Col
 summary(df)
-df[ , 4:5]  #4th & 5th col
-df[ , c(1,3,5)] #1,3, 5 th row
+df[ , 4:5]  #4th & 5th col - see missing values
+df[ , c(1,3,5)] #1,3, 5 th row - see missing values
 df[is.na(df$Dream),] #rows which have missing values in Dream Column
 df[is.na(df$Dream), 'Dream'] #missing values in Dream Column (Vector column - data to replace here)
 df[is.na(df$Dream), 'Dream'] = mean(df$Dream, na.rm=T)
@@ -66,6 +66,15 @@ colSums(is.na(df))  #Dream does not have missing values now
 #do the similar actions for NonD
 df[is.na(df$NonD), 'NonD'] = mean(df$NonD, na.rm=T)
 colSums(is.na(df))
+df
+#and so on 
+#use for loop
+df=sleep
+colSums(is.na(df))
+for(i in 1:ncol(df)){
+  df[is.na(df[,i]), i] <- mean(df[,i], na.rm = TRUE)
+}
+colSums(is.na(df))
 
-#and so on
 
+#end
