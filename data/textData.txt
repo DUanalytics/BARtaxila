@@ -1,0 +1,6 @@
+college	Prof	AsstProf
+Taxila	7	3
+IIM	2	0
+Amity	12	9
+IBS	4	4
+IIT	0	6

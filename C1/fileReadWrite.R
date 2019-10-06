@@ -34,6 +34,7 @@ head(taxila)
 
 #googlesheets
 #make sure the google sheet is public sharing ON
+#https://docs.google.com/spreadsheets/d/1Md_ro2t3M7nA9JMH1DsE12jfeX7qq-UPw6p8WQd6A2Y/edit#gid=216113907  # you can copy this url and open in browser to see data
 url2 = "https://docs.google.com/spreadsheets/d/1Md_ro2t3M7nA9JMH1DsE12jfeX7qq-UPw6p8WQd6A2Y/edit#gid=216113907"
 #url of gsheet
 library(gsheet)
@@ -41,6 +42,12 @@ denco = as.data.frame(gsheet2tbl(url2))
 head(denco)
 
 #cannot store to public read only gsheets unless you setup google apps authentication
+#Read from TextFile : deliimted by space
+?read.table
+faculties = read.table(file='data/textData.txt', sep='',header=T)
+#sepearator is space, columnames is first row
+faculties
+
 
 #other types can also be used
 #eg excel, STATA, SAS 
