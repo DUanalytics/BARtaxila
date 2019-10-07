@@ -3,6 +3,7 @@
 #libraries
 library(dplyr)
 library(ggplot2)
+library(reshape2)
 
 #MBA students from 2 year course, each has 2 sections; two Genders, 
 #Profile of Students
@@ -113,3 +114,29 @@ options(digit=2)
 (g3c <- ggplot(studentsDScourse, aes(x= priorTest)) +   geom_bar(aes(y = ..prop.., ), stat="count", fill='green', colour='red', alpha=.5 ) +  geom_text(aes(label = scales::percent(..prop..,2), y= ..prop..), stat= "count", vjust = -.5) + ggtitle("Test Scores prior to Course : Score vs Count | Batch vs Section") +  facet_grid(batch ~ section) + scale_y_continuous(name="Percentage of Students", labels=scales::percent_format(accuracy=1), limits =c(0,.6)) + xlab('Test Score from 10'))
 #ggsave("hist.png", p, height=4, width=6, dpi=150) #save last graph
 
+#Institute feels that everyone should do the course and the course should be made part of the curriculum with graded subject
+#Huge demand of Data Analytics, Present skill level of student is below average
+
+
+#training is conducted. Interim test is taken and a final test to assess the learning in Data Analytics
+names(studentsDScourse)
+tests = c('priorTest', 'midTest', 'endTest')
+profile
+
+studentsScore = studentsDScourse[, c('rollno', profile, tests)]
+melt1 <- melt(studentsScore, id.vars = c('rollno',profile))
+head(melt1); dim(melt1)
+table(melt1$variable)
+(mu <- melt1 %>% group_by(variable) %>% summarise(mscore = mean(value, na.rm=T)))
+breaks1=c(0,2,4,6,8)
+(g4a <- ggplot(data=melt1, aes(x=value)) +  stat_bin(aes(fill=variable), breaks=breaks1, color='red') + stat_bin(breaks=breaks1, geom='text', aes(label=..count..), pad=T)  +  facet_wrap(. ~ variable, ncol=1) + ggtitle("Test Scores prior/mid/end to Course : Score Distribution vs Count | Time Intervals ") + xlab('Test Score from 10') + geom_vline(data=mu, aes(xintercept=mscore, color=variable),  linetype="dashed") + scale_x_continuous(breaks=c(0:10)))
+
+#+ geom_histogram(breaks=c(0,2,4,6,8,10), aes(y=..density..), alpha=0.5,  position="identity")
+
+ggplot() +  geom_histogram(data = melt1, aes(x = value, y = ..density.., ), breaks=breaks1 ) + geom_vline(data = mu, mapping = aes(xintercept = mscore)) +  facet_wrap(. ~ variable, ncol=1) 
+
+(g4c <- ggplot(data=melt1, aes(x=value)) +  stat_bin(aes(fill=gender), breaks=breaks1) + stat_bin(breaks=breaks1, geom='text', aes(label=..count..), pad=T)  +  facet_wrap(. ~ variable, ncol=1) + ggtitle("Test Scores prior/mid/end to Course : Score Distribution vs Count | Time Intervals ") + xlab('Test Score from 10') + geom_vline(data=mu, aes(xintercept=mscore, color=variable),  linetype="dashed") + scale_x_continuous(breaks=c(0:10)))
+
+(mu2 <- melt1 %>% group_by(batch, section,variable) %>% summarise(mscore = round(mean(value, na.rm=T),1)))
+(g4d <- ggplot(data=melt1, aes(x=value)) +  stat_bin(aes(fill=gender), breaks=breaks1) + stat_bin(breaks=breaks1, geom='text', aes(label=..count..), pad=T)  +  facet_grid(batch + section ~ variable) + ggtitle("Test Scores prior/mid/end to Course : Score Distribution vs Count | Time Intervals ") + xlab('Test Score from 10') + geom_vline(data=mu2, aes(xintercept=mscore),  linetype="dashed") + scale_x_continuous(breaks=c(0:10)) + geom_text(data=mu2, aes(x=mscore+.3, y=20, label=mscore), size=2))
+?annotate
