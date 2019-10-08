@@ -40,8 +40,9 @@ gb2 + gb2b
 
 #using summary table
 s1
-ggplot(data=s1, aes(x=gear, y=n, fill=cyl)) + geom_bar(stat='identity', position = position_dodge2(.7)) + geom_text(stat='identity', aes(label=n, y=n), position = position_dodge2(.7))
-
+gb3 <- ggplot(data=s1, aes(x=gear, y=n, fill=cyl)) + geom_bar(stat='identity', position = position_dodge2(.7)) + geom_text(stat='identity', aes(label=n, y=n), position = position_dodge2(.7))
+gb3
+gb3 + coord_flip()
 
 #end here----------------------
 
