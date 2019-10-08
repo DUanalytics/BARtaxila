@@ -9,10 +9,15 @@ library(reshape2)
 #Profile of Students
 n=200
 (rollno = 101:(100+n))
+#set.seed(100)
 (gender = sample(c('M','F'), size=n, replace=T, prob=c(.6, .4)))
+#set.seed(101)
 (batch = sample(c('Year1','Year2'), size=n, replace=T, prob=c(.6, .4)))
+#set.seed(102)
 (section = sample(c('SecA','SecB'), size=n, replace=T, prob=c(.5, .5)))
+#set.seed(103)
 (ugcourse = sample(c('BTECH','BCOM','BA', "OTHERS"), size=n, replace=T, prob=c(.2, .3, .2, .3)))
+#set.seed(104)
 (ugscore = round(rnorm(100, mean=63, sd=10),0))
 
 students = data.frame(rollno, gender, batch, section, ugcourse, ugscore)
@@ -31,14 +36,17 @@ students %>% group_by(batch, ugcourse) %>% tally() #s5
 ratings = c('Excellent','VeryGood', 'Good','Satisfactory', 'Poor')
 rev(ratings)
 (fratings = factor(x=ratings, ordered=T, levels=rev(ratings)))
+#set.seed(123)
 (klevels1 = sample(fratings, size=n, replace=T, prob=c(.02, .1, .2,.48,.2)))
 table(klevels1)
 
 #Qs asked as to how many wanted to learn Data Analytics so that a central programme could be conducted
+#set.seed(123)
 (learnDA = sample(c('Yes','No', 'Maybe'), size=n, replace=T, prob=c(.6, .1,.3)))
 
 #A online quiz was conducted to assess the knowledge, it was planned that same/similar test be conducted if the training was conducted to see the improvement: prior-test results were as follows
 (prob1 = c(.2, .395, rep(.075,4), rep(.025,4),0.005)); sum(prob1); length(prob1)
+#set.seed(123)
 (priorTest = sample(x=0:10, size=n, replace=T, prob=prob1))
 table(priorTest)
 
@@ -46,15 +54,18 @@ table(priorTest)
 
 #Half way through Qs was asked and similar quiz test was conducted with a feedback to know student satisfaction
 (prob2 = c(.05, .09, rep(.09,4), rep(.1,4),0.1)); sum(prob2); length(prob2)
+#set.seed(123)
 (midTest = sample(x=0:10, size=n, replace=T, prob=prob2))
 table(midTest)
 
 #End of the course quiz and feedback was collected
 (prob3 = c(.0005, .005, rep(.05,4), rep(.14,4),0.2345)); sum(prob3); length(prob3)
+#set.seed(123)
 (endTest = sample(x=0:10, size=n, replace=T, prob=prob3))
 table(endTest)
 #ratings of knowledge 
 fratings
+#set.seed(123)
 (klevels2 = sample(fratings, size=n, replace=T, prob=c(.3, .3, .24,.15,.01)))
 table(klevels2)
 
@@ -100,6 +111,9 @@ head(studentsDScourse[,c('rollno', profile, bc)])
 (g2a <- ggplot(studentsDScourse, aes(x=klevels1, fill=learnDA)) + stat_count( geom = "bar",position=position_dodge2(.7, preserve = "single")) + geom_text(stat='count', aes(label=..count..), vjust=-1, position= position_dodge2(.7, preserve = 'single')) +  facet_grid(batch ~ section) + ggtitle('Students with Different Knowledge Levels Wanting to Learning Data Analyitcs \n Knowledge Levels vs Count | Batch vs Sections')  + ylim(c(0,20))  + guides(ylab='Count') + labs(fill='Student Choice') + xlab("Knowledge Levels"))
 
 (g2b <- ggplot(studentsDScourse, aes(x=klevels1, fill=learnDA)) + stat_count( geom = "bar", position=position_dodge2(.7, preserve = "single")) + geom_text(stat='count', aes(label=..count..), vjust=-1, position= position_dodge2(.7, preserve = 'single')) +  facet_grid(batch + section  ~ gender) + ylim(c(0,15)) + labs(fill='Student Choice') + ggtitle('Students with Different Knowledge Levels Wanting to Learning Data Analyitcs \n Knowledge Levels vs Count | Batch vs Sections vs Gender') + theme(legend.position = 'top',legend.direction = "horizontal") + scale_fill_manual(values=c("blue", "red", "green")) + xlab("Knowledge Levels"))
+
+#---
+(g2c <- ggplot(studentsDScourse, aes(x=learnDA, fill=learnDA)) + stat_count( geom = "bar", position=position_dodge2(.7, preserve = "single")) + geom_text(stat='count', aes(label=..count..), vjust=-1, position= position_dodge2(.7, preserve = 'single')) + labs(title='Total Summary of Choices for DS Coursees'))
 
 #see the prior test score - histogram
 (g3a <- ggplot(studentsDScourse, aes(x=priorTest)) + geom_histogram(position="identity", fill="blue", color='black', alpha=0.2, bins = 10) +  facet_grid(batch ~ section) + ggtitle("Test Scores prior to Course : Score vs Count | Batch vs Section") + xlab('Test Score from 10') )
