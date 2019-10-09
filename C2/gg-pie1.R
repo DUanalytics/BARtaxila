@@ -12,7 +12,7 @@ sapply(df, class)
 
 #base
 table(df$cyl)
-pie(table(df$cyl))
+pie(table(df$cyl), main="Pie chart with Count of Cylinders Types")
 #other options for formatting...
 
 #ggplot

@@ -8,12 +8,13 @@ pairs(women)
 
 #mtcars
 numCols = c('mpg','wt','hp','disp')
-head(mtcars[numCols])
-cor(mtcars[numCols])
-pairs(mtcars[numcols])
+df=mtcars
+head(df[,numCols])
+cor(df[,numCols])
+pairs(df[,numcols])
 options(digits=2)  #limit no of digits of decimal to 2 places
-cor(mtcars[numCols])
-pairs(mtcars[numcols])
+cor(df[,numCols])
+pairs(df[, numCols])
 
 
 

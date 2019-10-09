@@ -1,5 +1,14 @@
 #box Plot
 #used for continuous values to depict 5 number summary
+library(dplyr)
+library(ggplot2)
+
+df=mtcars
+catcols = c('cyl', 'vs', 'am', 'gear', 'carb')
+df[,catcols] = lapply(df[,catcols], as.factor)
+
+sapply(df, class)
+
 
 mtcars
 summary(mtcars$mpg)

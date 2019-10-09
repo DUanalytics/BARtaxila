@@ -17,7 +17,7 @@ p1
 p1 + scale_size_area(max_size=3)
 p1 + scale_size_area(max_size=5)  #max size scale upto 5
 p1 + scale_size_area(max_size=10)
-p1 + scale_size_area(max_size=5, guide=F)  #no legend
+p1 + scale_size_area(max_size=5)  #no legend
 
 #
 ggplot(df, aes(x = wt, y = mpg, label = rownames(mtcars))) + geom_point(aes(size = gear, colour = cyl, alpha=.02)) +   geom_text(hjust = 1, size = 2) +  scale_size(range = c(1,5)) +  theme_bw()

@@ -20,16 +20,16 @@ ggplot(data=df, aes(x=gear, fill=gear)) + geom_bar()
 ggplot(data=df, aes(x=gear, fill=gear)) + geom_bar() + coord_flip()
 
 #stacked
-ggplot(data=df, aes(x=gear, fill=cyl)) + geom_bar(position = position_stack())
+ggplot(data=df, aes(x=gear, fill=cyl)) + geom_bar(position = position_stack()) + labs(title='Stacked Bar Plot')
 
 #full rectange with % within gear
 df %>% group_by(gear, cyl) %>% summarise(n=n())
 (s1 <- df %>% group_by(gear, cyl) %>% summarise(n=n()) %>% mutate(perc = round(n/ sum(n, na.rm=T),2)))
 s1 %>% group_by(gear) %>% summarise(sum(perc))  #this should be 1
 
-ggplot(data=s1, aes(x=gear, y=perc, fill=cyl)) + geom_bar(stat='identity', position = position_stack())
+ggplot(data=s1, aes(x=gear, y=perc, fill=cyl)) + geom_bar(stat='identity', position = position_stack()) + labs(title='Stacked Bar Plot')
 #put labels also
-ggplot(data=s1, aes(x=gear, y=perc, fill=cyl)) + geom_bar(stat='identity', position = position_stack()) + geom_text(aes(label=paste(perc*100,'%'), y=perc), position = position_stack())
+ggplot(data=s1, aes(x=gear, y=perc, fill=cyl)) + geom_bar(stat='identity', position = position_stack()) + geom_text(aes(label=paste(perc*100,'%'), y=perc), position = position_stack()) +  labs(title='Stacked Bar Plot')
 
 
 #dodge / side bars
