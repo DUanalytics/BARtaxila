@@ -1,6 +1,6 @@
 #case - Visualisation
 
-#libraries
+#libraries----
 library(dplyr)
 library(ggplot2)
 library(reshape2)
@@ -87,7 +87,7 @@ str(studentsDScourse)
 #data1 = read.csv('data/DScourse.csv')
 #str(data1)
 
-#visualise the profile
+#visualise-----
 #baseplot
 (g1a <- barplot(table(studentsDScourse$batch), col=1:2))
 (g1b <- pie(table(studentsDScourse$batch), col=1:2))
@@ -151,7 +151,7 @@ breaks1=c(0,2,4,6,8)
 
 #+ geom_histogram(breaks=c(0,2,4,6,8,10), aes(y=..density..), alpha=0.5,  position="identity")
 
-ggplot() +  geom_histogram(data = melt1, aes(x = value, y = ..density.., ), breaks=breaks1 ) + geom_vline(data = mu, mapping = aes(xintercept = mscore)) +  facet_wrap(. ~ variable, ncol=1) 
+(g4b <- ggplot() +  geom_histogram(data = melt1, aes(x = value, y = ..density.., ), breaks=breaks1 ) + geom_vline(data = mu, mapping = aes(xintercept = mscore)) +  facet_wrap(. ~ variable, ncol=1) )
 
 (g4c <- ggplot(data=melt1, aes(x=value)) +  stat_bin(aes(fill=gender), breaks=breaks1) + stat_bin(breaks=breaks1, geom='text', aes(label=..count..), pad=T)  +  facet_wrap(. ~ variable, ncol=1) + ggtitle("Test Scores prior/mid/end to Course : Score Distribution vs Count | Time Intervals ") + xlab('Test Score from 10') + geom_vline(data=mu, aes(xintercept=mscore, color=variable),  linetype="dashed") + scale_x_continuous(breaks=c(0:10)))
 
@@ -184,6 +184,7 @@ names(studentsDScourse)
 #line of growth
 (m2sum <- melt2 %>% group_by(batch, ugcourse, variable) %>% summarise(meanScore = mean(value, na.rm=T)))
 m2sum$variable = factor(m2sum$variable, ordered=2, levels = c('priorTest', 'midTest', 'endTest'))
+
 (g5k <- ggplot(data = m2sum, aes(x = variable, y = meanScore, group = ugcourse)) + geom_line(aes(color = ugcourse), size=2) + facet_grid(. ~ batch) + labs(title='Increase in Performance (Before/ During/ After the Course) |  UG Course vs Batch', x='Test Timing', y="Mean Score"))
 #------
 (m3sum <- melt2 %>% group_by(batch, ugcourse, variable) %>% summarise(meanScore = mean(value, na.rm=T)))
@@ -194,3 +195,26 @@ m2sum$variable = factor(m2sum$variable, ordered=2, levels = c('priorTest', 'midT
 #write.csv(studentsDScourse,'data/DScourse.csv', row.names = F)
 #data1 = read.csv('data/DScourse.csv')
 #str(data1)
+
+
+#save multiple plots in one PDF file
+library(gridExtra)
+names(studentsDScourse)
+(sum2A <- studentsDScourse %>% group_by(batch, ugcourse) %>% summarise(count = n(), meanUGscore = mean(ugscore, na.rm=T), meanPT = mean(priorTest, na.rm=T), meanMT = mean(midTest, na.rm=T), meanET = mean(endTest, na.rm=T)))
+(sum2B <- studentsDScourse %>% group_by(batch, section, gender, learnDA) %>% summarise(count = n()) %>% dcast( batch + section + gender ~ learnDA, value.var = 'count'))
+(sum2C <- studentsDScourse %>% group_by(batch, section, learnDA, klevels1, klevels2) %>% summarise(count = n()) )
+(sum2C1 <- studentsDScourse %>% melt(id.vars =c('batch', 'section', 'learnDA'), measure.var=c('klevels1', 'klevels2')))
+sum2C1
+sum2C1$variable = ifelse(sum2C1$variable == 'klevels1', 'KL1','KL2')
+sum2C1$value = plyr::mapvalues(sum2C1$value, from=c('Excellent','VeryGood','Good','Satisfactory','Poor'), to=c('E','VG','G','S','P'))
+
+(sum2C2 <- dcast(sum2C1, batch + section + learnDA ~ variable + value, value.var = 'value', fun.aggregate = length))
+names(sum2C2)
+(sum2C3 = sum2C2[, c("batch", "section", "learnDA", "KL1_E", 'KL2_E', "KL1_VG",'KL2_VG', "KL1_G", 'KL2_G',"KL1_S",'KL2_S', "KL1_P", 'KL2_P')])
+
+
+graphList = list(g2a,g2b, g2c, g2d, g3a, g3b, g3c, g4a, g4b, g4c, g4d, g5a, g5b, g5c, g5d, g5e, g5k, tableGrob(sum2A), tableGrob(sum2B), tableGrob(sum2C3))
+arrangeGraphs <- gridExtra::marrangeGrob(graphList, nrow=1, ncol=1, top = quote(paste("Graphs made using R : by Dhiraj : ", "page", g, "of", npages)))
+ggsave("graphs/ST-case1.pdf", arrangeGraphs, width=4, height=2, units="in", scale=3)
+#go to pdf and see the document
+#end of case: run it everytime with different pattern and do analysis
