@@ -82,14 +82,18 @@ dscourse
 studentsDScourse = merge(students, dscourse)  #merge two data
 head(studentsDScourse)
 str(studentsDScourse)
+#------------------------export / import data-----------
+#write.csv(studentsDScourse,'data/DScourse.csv', row.names = F)
+#data1 = read.csv('data/DScourse.csv')
+#str(data1)
 
 #visualise the profile
 #baseplot
-(g1a <- barplot(table(students$batch), col=1:2))
-(g1b <- pie(table(students$batch), col=1:2))
+(g1a <- barplot(table(studentsDScourse$batch), col=1:2))
+(g1b <- pie(table(studentsDScourse$batch), col=1:2))
 (g1c <- pie(table(studentsDScourse$learnDA), col=1:3, main='Choice for doing Data Analytics Course'))
-(g1d <- hist(studentDScourse$priorTest))
-(g1e <- hist(studentDScourse$priorTest, breaks=5, col=1:5))
+(g1d <- hist(studentsDScourse$priorTest))
+(g1e <- hist(studentsDScourse$priorTest, breaks=5, col=1:5))
 
 
 #ggplot
@@ -153,4 +157,40 @@ ggplot() +  geom_histogram(data = melt1, aes(x = value, y = ..density.., ), brea
 
 (mu2 <- melt1 %>% group_by(batch, section,variable) %>% summarise(mscore = round(mean(value, na.rm=T),1)))
 (g4d <- ggplot(data=melt1, aes(x=value)) +  stat_bin(aes(fill=gender), breaks=breaks1) + stat_bin(breaks=breaks1, geom='text', aes(label=..count..), pad=T)  +  facet_grid(batch + section ~ variable) + ggtitle("Test Scores prior/mid/end to Course : Score Distribution vs Count | Time Intervals ") + xlab('Test Score from 10') + geom_vline(data=mu2, aes(xintercept=mscore),  linetype="dashed") + scale_x_continuous(breaks=c(0:10)) + geom_text(data=mu2, aes(x=mscore+.3, y=20, label=mscore), size=2))
-?annotate
+
+
+#additional graphs
+(g5a <- ggplot(studentsDScourse, aes(x="", fill=ugcourse)) +   geom_bar(width = 1) + coord_polar("y") + labs(title="Distribution of various UG Course Types"))
+(g5b <- ggplot(studentsDScourse, aes(x="", fill=batch)) +   geom_bar(width = 1) + coord_polar("y") + labs(title="Distribution of various Batch"))
+#heat map
+#heatmap with selected color gradient
+names(studentsDScourse)
+(shd <- studentsDScourse %>% group_by(batch, ugcourse) %>% summarise(meanET = round(mean(endTest, na.rm=T),1)))
+(g5c <- ggplot(data=shd, aes(x=batch, y=ugcourse, fill=meanET)) + geom_tile() + geom_text(aes(label=meanET), size=10) + scale_fill_gradient(low = "yellow", high = "green") + guides(fill=F) + labs(title='Mean Score : Year | UG course'))
+
+
+
+(g5d <- ggplot(data=studentsDScourse %>% group_by(batch, section, gender, ugcourse) %>% summarise(meanET = round(mean(endTest, na.rm=T),1)), aes(x=batch, y=ugcourse, fill=meanET)) + geom_tile() + geom_text(aes(label=meanET), size=5) + scale_fill_gradient(low = "yellow", high = "green") + guides(fill=F) + facet_grid(section ~ gender) + labs(title='Mean Score : Year | UG course vs Section | gender'))
+
+(g5e <- ggplot(data=studentsDScourse %>% group_by(learnDA, klevels1) %>% summarise(count=n()), aes(x=learnDA, y=klevels1, fill=count)) + geom_tile() + geom_text(aes(label=count), size=10) + scale_fill_gradient(low = "violet", high = "cyan") + guides(fill=F) + labs(title='Count of Students : Learning Options | Knowledge Levels'))
+
+
+(g5f <- ggplot(data=studentsDScourse %>% group_by(learnDA, klevels1) %>% summarise(meanET = round(mean(endTest, na.rm=T),1)), aes(x=learnDA, y=klevels1, fill=meanET)) + geom_tile() + geom_text(aes(label=meanET), size=10) + scale_fill_gradient(low = "violet", high = "cyan") + guides(fill=F) + labs(title='Mean Score : Learning Options | Knowledge Levels'))
+
+#line of growth : marks
+names(studentsDScourse)
+(melt2 = melt(studentsDScourse[,c('rollno', 'batch', 'ugcourse', 'priorTest', 'midTest', 'endTest')], id.vars = c('rollno', 'batch', 'ugcourse')))
+
+#line of growth
+(m2sum <- melt2 %>% group_by(batch, ugcourse, variable) %>% summarise(meanScore = mean(value, na.rm=T)))
+m2sum$variable = factor(m2sum$variable, ordered=2, levels = c('priorTest', 'midTest', 'endTest'))
+(g5k <- ggplot(data = m2sum, aes(x = variable, y = meanScore, group = ugcourse)) + geom_line(aes(color = ugcourse), size=2) + facet_grid(. ~ batch) + labs(title='Increase in Performance (Before/ During/ After the Course) |  UG Course vs Batch', x='Test Timing', y="Mean Score"))
+#------
+(m3sum <- melt2 %>% group_by(batch, ugcourse, variable) %>% summarise(meanScore = mean(value, na.rm=T)))
+m2sum$variable = factor(m2sum$variable, ordered=2, levels = c('priorTest', 'midTest', 'endTest'))
+
+
+
+#write.csv(studentsDScourse,'data/DScourse.csv', row.names = F)
+#data1 = read.csv('data/DScourse.csv')
+#str(data1)
