@@ -1,5 +1,11 @@
 #ggplot system
-
+#https://ggplot2.tidyverse.org/reference/
+#https://www.rdocumentation.org/packages/ggplot2/versions/3.2.1/topics/ggplot
+#http://r-statistics.co/ggplot2-Tutorial-With-R.html
+#https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html
+#https://www.statmethods.net/advgraphs/ggplot2.html
+#http://www.sthda.com/english/wiki/ggplot2-box-plot-quick-start-guide-r-software-and-data-visualization
+#https://rafalab.github.io/dsbook/ggplot2.html
 library(ggplot2)
 ?ggplot
 #gplot(data = NULL, mapping = aes()))
