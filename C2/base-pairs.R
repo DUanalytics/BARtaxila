@@ -17,6 +17,12 @@ cor(df[,numCols])
 pairs(df[, numCols])
 
 
+pairs(df[ , numCols],  col = "red",  # Change color
+      pch = 18,              # Change shape of points
+      labels = numCols,      # Change labels of diagonal
+      main = "This is a nice pairs plot in R")  
 
 #useful in statistical analysis
 
+
+#https://statisticsglobe.com/r-pairs-plot-example/

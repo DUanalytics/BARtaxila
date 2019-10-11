@@ -12,3 +12,9 @@ df
 p <- plot_ly(   df, x = ~wt, y = ~hp, z = ~qsec,    color = ~am, colors = c('#BF382A', '#0C4B8E') ) %>%   add_markers() %>%   layout(     scene = list(xaxis = list(title = 'Weight'),  yaxis = list(title = 'Gross horsepower'),  zaxis = list(title = '1/4 mile time'))
   )
 p
+
+
+
+
+#https://www.datanovia.com/en/blog/how-to-create-a-ggplot-like-3d-scatter-plot-using-plotly/
+
