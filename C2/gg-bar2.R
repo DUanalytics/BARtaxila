@@ -49,4 +49,11 @@ ggplot(df, aes(cyl, fill = vs)) +  geom_bar(position = "dodge")
 with(df, table(cyl , vs ))  #convert table to DF
 as.data.frame(with(df, table(cyl , vs )))  #Freq column added
 ggplot(as.data.frame(with(df, table(cyl , vs ))),   aes(cyl, y = Freq, fill = vs)) +  geom_col(position = "dodge") +   scale_fill_discrete(drop = FALSE)
-      
+
+
+g7a <- ggplot(df2,aes(x = gear,fill = cyl)) 
+g7a +   geom_bar(colour = "black",position = "dodge",stat = "count")
+g7a +   geom_bar(colour = "black",position = position_dodge(preserve='single'),stat = "count")
+
+
+#end here...
