@@ -44,6 +44,10 @@ gb3 <- ggplot(data=s1, aes(x=gear, y=n, fill=cyl)) + geom_bar(stat='identity', p
 gb3
 gb3 + coord_flip()
 
+
+
+
+
 #end here----------------------
 
 #links
