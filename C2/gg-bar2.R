@@ -56,4 +56,4 @@ g7a +   geom_bar(colour = "black",position = "dodge",stat = "count")
 g7a +   geom_bar(colour = "black",position = position_dodge(preserve='single'),stat = "count")
 
 
-#end here...
+#end here..._ta1

@@ -4,11 +4,14 @@ df=mtcars
 catcols = c('cyl', 'vs', 'am', 'gear', 'carb')
 df[,catcols] = lapply(df[,catcols], as.factor)
 
-
+#base
+hist(df$mpg)
+#ggplot
+library(ggplot2)
 #width of bin : each mpg value : 10, 11,...
 ggplot(df,aes(x=mpg)) +  stat_bin(binwidth=1) + ylim(c(0, 12)) +    stat_bin(binwidth=1, geom="text", aes(label=..count..), vjust=-1.5) 
 #width of each bin : 5 mpg ie: 10-15,15-20 ..
-ggplot(df,aes(x=mpg)) +  stat_bin(binwidth=5)  +stat_bin(binwidth=5, geom="text", aes(label=..count..), vjust=-1.5) 
+ggplot(df,aes(x=mpg)) +  stat_bin(binwidth=5)  +stat_bin(binwidth=5, geom="text", aes(label=..count..), vjust=-1.5) + ylim(c(0,20))
 
 #color of bar as per count
 ggplot(data=df, aes(mpg)) +  geom_histogram(breaks=seq(10, 50, by=5),  col="red",  aes(fill=..count..)) +  scale_fill_gradient("Count", low="green", high="red") + stat_bin(geom='text', aes(label=..count..), breaks=seq(10, 50, by=5)) +  geom_histogram(aes(y =..density..), breaks=seq(10, 50, by = 5),  col="red", fill="green", alpha=.2) + geom_density(col=2)

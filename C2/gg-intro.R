@@ -54,7 +54,7 @@ library(dplyr)
 (table1 <- df %>% group_by(gear, cyl, am) %>% summarise(n=n()))
 (graph1 <- ggplot(table1, aes(x=gear, y=n, fill=gear)) + geom_bar(stat='identity') + facet_grid(cyl ~ am))
 grid.arrange(tableGrob(table1), graph1, ncol=2)
-ggsave(filename='c2/g1.pdf')
+ggsave(filename='g1taxila.pdf')
 
 
 #stepwise creation
