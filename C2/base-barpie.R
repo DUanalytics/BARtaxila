@@ -1,24 +1,22 @@
 #bar Plot in R
 #count of categories
 library(dplyr)
-library(ggplot2)
-
+#library(ggplot2)
+    
 df=mtcars
+names(df)
+str(df)
 catcols = c('cyl', 'vs', 'am', 'gear', 'carb')
 df[,catcols] = lapply(df[,catcols], as.factor)
-
-lapply(df, class)
-
+sapply(df, class)
 ?barplot
-
-cylinders = table(df$cyl)
+barplot(height=c(50,15,39.4))
+barplot(c(19,34), col=1:2)
+(cylinders = table(df$cyl))
 barplot(height=cylinders)
-
 barplot(height=table(df$am))
 barplot(height=table(df$gear), col=1:3, main='No of cars of each gear type', xlab='Gear Type', ylab='Count of Cars')
-
 barplot(height=table(df$carb), col=1:5, horiz = T)
-
 #--------------------------
 #simple Bar
 # Simple Bar Plot

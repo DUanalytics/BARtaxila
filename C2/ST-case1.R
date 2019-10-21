@@ -215,6 +215,6 @@ names(sum2C2)
 
 graphList = list(g2a,g2b, g2c, g2d, g3a, g3b, g3c, g4a, g4b, g4c, g4d, g5a, g5b, g5c, g5d, g5e, g5k, tableGrob(sum2A), tableGrob(sum2B), tableGrob(sum2C3))
 arrangeGraphs <- gridExtra::marrangeGrob(graphList, nrow=1, ncol=1, top = quote(paste("Graphs made using R : by Dhiraj : ", "page", g, "of", npages)))
-ggsave("graphs/ST-case1.pdf", arrangeGraphs, width=4, height=2, units="in", scale=3)
+ggsave("graphs/priya.pdf", arrangeGraphs, width=4, height=2, units="in", scale=3)
 #go to pdf and see the document
 #end of case: run it everytime with different pattern and do analysis

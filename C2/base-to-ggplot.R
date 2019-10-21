@@ -14,8 +14,8 @@ ggplot(data=df, aes(x=mpg)) + geom_histogram() + ggtitle('ggplot - Histogram')
 
 hist(df$mpg, breaks=5, col='green', main='Base Plot - Histogram')
 ggplot(data=df, aes(x=mpg)) + geom_histogram(bins=5, fill='green', colour='red') + ggtitle('ggplot - Histogram')
-
-hist(df$mpg, breaks=c(0,10,15,20,25,40), col=1:5, main='Base Plot - Histogram'))
+2302697713
+hist(df$mpg, breaks=c(0,10,15,20,25,40), col=1:5, main='Base Plot - Histogram')
 ggplot(data=df, aes(x=mpg)) + geom_histogram(breaks=c(0,10,15,20,25,40), fill=1:5) + ggtitle('ggplot - Histogram')
 
 #barplot-----
@@ -39,7 +39,7 @@ ggplot(data=df, aes(x=wt, y=mpg)) + geom_point() + ggtitle('ggplot - Scatter Plo
 table(df$gear)
 plot(df$wt, df$mpg, main='Base - Scatter Plot', col=df$gear, pch=24)
 legend(x="topright",legend=c("Gear3","Gear4", "Gear5"), col=c("red","blue","green"), pch=24)
-ggplot(data=df, aes(x=wt, y=mpg, fill=gear)) + geom_point(pch=24) + ggtitle('ggplot - Scatter Plot')
+ggplot(data=df, aes(x=wt, y=mpg, fill=gear, size=hp)) + geom_point(pch=24) + ggtitle('ggplot - Scatter Plot')
 
 #lineplot -----
 #https://www.datanovia.com/en/blog/line-types-in-r-the-ultimate-guide-for-r-base-plot-and-ggplot/
@@ -53,7 +53,7 @@ plot(x=df1$wt, y=df1$mpg, type = "b", lty = 1, col='red') #M3
 
 ggplot(data=df, aes(x=wt, y=mpg)) + geom_line() + ggtitle('ggplot - Scatter Plot')
 #wt sorted
-ggplot(data=df, aes(x=wt, y=mpg)) + geom_line(lty=1, lwd=2, color=3) + ggtitle('ggplot - Scatter Plot')
+ggplot(data=df, aes(x=wt, y=mpg, color=gear)) + geom_line(lty=1, lwd=2) + ggtitle('ggplot - Scatter Plot')
 ggplot(data=df, aes(x=wt, y=mpg)) + geom_point(fill='red', size=3, pch=23) + geom_line(lty=1, lwd=1, color=3) + ggtitle('ggplot - Scatter Plot')
 
 #pair plot-----
