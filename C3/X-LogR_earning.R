@@ -48,6 +48,9 @@ ggplot(adult, aes(hours.per.week)) + geom_histogram()
 table(adult$native.country)
 names(adult)
 adult %>% group_by(native.country, income) %>% summarise(n=n()) %>%  ggplot(., aes(x=reorder(native.country, n), y=n, fill=income)) + geom_bar(stat='identity', color = "black") + coord_flip()
+adult %>% ggplot(., aes(x=age)) +  geom_histogram(aes(fill = income), color = "black", binwidth = 2)
+
+
 
 #Building the Model The purpose of this model is to classify people into two groups, below 50k or above 50k in income. We will build the model using training data, and then predict the salary class using the test group.
 # 
@@ -79,6 +82,9 @@ table(test$income, prediction >= 0.1)
 
 #what should be the cutoff value between 0 and 1 to categorise them into 0 or 1, so that accuracy is high (correct splitting)
 
+
+
+
 #------------------------------
 (prob = plogis(predict(log.model, test)))
 optimalCutoff(test$income, prob)[1] 
@@ -88,9 +94,10 @@ library(InformationValue)
 (optCutOff <- InformationValue::optimalCutoff(test$income, predicted)[1] )
 
 #Confusion Matrix
-(cm1= confusionMatrix(test$income, predicted, threshold = optCutOff))
+(cm1= as.matrix(confusionMatrix(test$income, predicted, threshold = optCutOff)))
 #0 classified as 0, 1 classified as 1
-
+class(cm1)
+(accuracy_train <- sum(diag(cm1))/sum(cm1)*100)
 
 
 #diagnostics
