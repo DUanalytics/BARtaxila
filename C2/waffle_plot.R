@@ -45,7 +45,8 @@ ggplot(data = waffle_iron(df, aes_d(group=cylinder)), aes(x, y, fill = group)) +
 #--------------
 waffledata = read.csv('data/waffledata.csv')
 head(waffledata)
+waffledata %>% group_by(Columns) %>% tally()
 ggplot(data = waffle_iron(waffledata, aes_d(group=Columns)), aes(x, y, fill = group)) +  geom_waffle() +   coord_equal() 
 
-ggplot(data = waffle_iron(waffledata, aes_d(group=Columns)), aes(x, y, fill = group)) + ggwaffle::geom_waffle(size = 1, colour = "red") 
+ggplot(data = waffle_iron(waffledata, aes_d(group=Columns)), aes(x, y, fill = group)) + ggwaffle::geom_waffle(size = 1, colour = "red", aes(fill=factor(group))) 
 ?geom_waffle
