@@ -40,8 +40,6 @@ names(mtcars)
 data2 = mtcars[c('mpg','disp','hp','wt')]
 head(data2)
 nc = NbClust(data2, distance="euclidean",min.nc=2, max.nc=15, method="average")
-det(as.matrix(mtcars))
-?na.action
 km3= kmeans(data,centers=3)
 km3$tot.withinss
 
