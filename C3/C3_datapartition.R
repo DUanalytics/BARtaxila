@@ -74,15 +74,3 @@ testing
 table(training$am)
 table(testing$am)
 
-
-
-
-
-
-
-
-
-
-
-
-

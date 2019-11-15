@@ -32,3 +32,5 @@ stem(x)
 library(fdth)  #fast way of creating FT
 ftable1 = fdt(x)
 ftable1
+
+

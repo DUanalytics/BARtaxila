@@ -1,9 +1,6 @@
 #Clustering
 
-
 #https://data-flair.training/blogs/clustering-in-r-tutorial/
-
-
 
 #Author DataFlair
 library(tidyverse)
