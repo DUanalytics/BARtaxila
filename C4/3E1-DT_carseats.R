@@ -5,7 +5,8 @@ data(Carseats)
 ?Carseats
 data = Carseats
 head(data)
-
+dim(data)
+str(data)
 #Libraries for Decision Tree
 library(rpart)
 library(rpart.plot)
@@ -14,12 +15,13 @@ library(rpart.plot)
 tree1 = rpart(Sales ~ . , data=data, method='anova' )
 tree1
 rpart.plot(tree1, cex=.8,nn=T)
-
 #this is large tree, so prune it: check cp
 printcp(tree1)
 #cp value should be chosen such that xerror is least
-prunetree = prune(tree1, cp=0.03)
+prunetree = prune(tree1, cp=0.024)
 prunetree
+rpart.plot(prunetree, cex=1,nn=T)
+
 #here we have selected a different value to simplify the tree
 mean(data$Sales)
 prunetree
@@ -49,3 +51,14 @@ cbind(testdata, predictedSales)
 
 #see online help here
 #https://www.datacamp.com/community/tutorials/decision-trees-R
+
+str(data)
+ctree1  = rpart(Urban ~ . , data = data, method='class')
+ctree1
+rpart.plot(ctree1)
+rpart.plot(ctree1, cex=1, nn=T)
+printcp(ctree1)
+prunectree1 = prune(ctree1, cp=.022)
+prunectree1
+rpart.plot(prunectree1, cex=1, nn=T)
+ 
