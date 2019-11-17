@@ -1,8 +1,8 @@
 #AR on cosmetics
 
 #https://storm.cis.fordham.edu/~yli/documents/CISC4631Spring15/AssociationHomework.pdf
-https://storm.cis.fordham.edu/~yli/documents/CISC4631Spring17/Weka_LabTwo.pdf
-https://github.com/bkrai/Top-10-Machine-Learning-Methods-With-R/blob/master/AssociationRules
+#https://storm.cis.fordham.edu/~yli/documents/CISC4631Spring17/Weka_LabTwo.pdf
+#https://github.com/bkrai/Top-10-Machine-Learning-Methods-With-R/blob/master/AssociationRules
 
 items = c('Foundation', 'Bag', 'Blush', 'Nail.Polish', 'Brushes', 'Concealer', 'Eyebrow.Pencils', 'Lip.Liner', 'Mascara', 'Eye.shadow', 'Lip.Gloss', 'Lipstic','Eyeliner')  
 length(items)
