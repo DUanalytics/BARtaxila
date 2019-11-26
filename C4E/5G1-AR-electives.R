@@ -1,6 +1,7 @@
 #AR on Electives
 library(arules)
 library(dplyr)
+library(ggplot2)
 #sample columns for electives
 #elective1, elective2, elective3, elective4, discipline
 n=100
@@ -41,20 +42,10 @@ set.seed(8); (oracle = sample(c(T,F), size=n, replace=T))
 electiveChoice = data.frame(java, cpp, php, dotnet, python, rpgm, mysql, oracle, stringsAsFactors = T)
 head(electiveChoice)
 
-#EDA----
-table(electiveChoice)
-table(electiveChoice$php, electiveChoice$oracle)
-prop.table(table(electiveChoice$dotnet, electiveChoice$oracle))
-electiveChoice %>% filter(dotnet == T) %>% count()
-electiveChoice %>% filter(oracle == T) %>% count()
-electiveChoice %>% filter(dotnet == T & oracle == T) %>% count()
-20/100 #support
-20/44 #confidence
-nrow(electiveChoice)
-20/100 / ((44/100) * (46/100))  #lift 
-inspect(elective_rules1[1:4])
 
-pairs(electiveChoice)
+
+
+
 
 #frequent items set ------
 elective_FI = eclat(electiveChoice, parameter= list(support=.2))
@@ -74,4 +65,20 @@ inspect(subset(elective_rules2, subset=lhs %ain% c('python','rpgm') ))
 inspect(subset(elective_rules2, subset=rhs %in% 'python' & confidence > .5))
 inspect(subset(elective_rules2, subset=lhs %pin% c('py') ))
 
+#EDA----
+table(electiveChoice)
+table(electiveChoice$php, electiveChoice$oracle)
+electiveChoice1  = cbind(rollno = rownames(electiveChoice), electiveChoice)
+electiveChoice1[1:25,] %>% reshape2::melt(id.vars='rollno') %>% filter(value==T) %>% ggplot(., aes(x=reorder(rollno), fill=variable)) + geom_bar(stat='count', position=position_stack()) 
 
+barplot(table(electiveChoice$php, electiveChoice$oracle))
+
+prop.table(table(electiveChoice$dotnet, electiveChoice$oracle))
+electiveChoice %>% filter(dotnet == T) %>% count()
+electiveChoice %>% filter(oracle == T) %>% count()
+electiveChoice %>% filter(dotnet == T & oracle == T) %>% count()
+20/100 #support
+20/44 #confidence
+nrow(electiveChoice)
+20/100 / ((44/100) * (46/100))  #lift 
+inspect(elective_rules1[1:4])
