@@ -21,6 +21,8 @@ range(ug); mean(ug)
 placement = data.frame(select, gender, cgpa, class12, ug)
 head(placement)
 
+
+#Logistic-------
 logmodel1 = glm(select ~ gender + cgpa + class12 + ug, data=placement, family='binomial')
 summary(logmodel1)
 #-----------------
@@ -53,3 +55,24 @@ t1=table(orgValues, PV_Cat)
 t1
 diag(t1)
 sum(diag(t1))/ sum(t1)  #accuracy
+
+
+#Decision Tree-----
+placement
+#write.csv(placement,'data/placement30Nov19.csv', row.names = F)
+head(placement)
+library(rpart)
+library(rpart.plot)
+names(placement)
+dtree = rpart(select ~ gender + cgpa + class12 + ug, data= placement, method='class')
+dtree
+rpart.plot(dtree,cex=.7)
+printcp(dtree)
+ptree1 <- prune(dtree, cp=0.026)
+ptree1
+rpart.plot(ptree1, cex=.7, extra=104, nn=T)
+prp(ptree1, cex=.7, extra=104)
+rpart.rules(ptree1)
+  
+
+#http://www.milbo.org/rpart-plot/prp.pdf

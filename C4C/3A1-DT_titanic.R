@@ -17,12 +17,12 @@ str(data)
 names(data)
 table(data$survived)
 str(data)
-fit <- rpart(survived ~ ., data = data, method = 'class')
+fit <- rpart(Survived ~ ., data = data, method = 'class')
 fit
 rpart.plot(fit, extra = 104, cex=.8,nn=T)  #plot
 head(data)
 printcp(fit) #select complexity parameter
-prunetree2 = prune(fit, cp=.015)
+prunetree2 = prune(fit, cp=.018)
 rpart.plot(prunetree2, cex=.8,nn=T, extra=104)
 prunetree2
 nrow(data)
