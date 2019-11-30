@@ -35,6 +35,7 @@ str(data)
 str(data)
 ## 2way contingency table of cat outcome and predictors we want
 ## to make sure there are not 0 cells
+table(data$rank)
 table(data$rank, data$admit)
 #which rank of institute are more successful (in nos/ %) in getting admitted - 2 /1
 (t1= xtabs(~ admit + rank, data = data))
@@ -152,3 +153,15 @@ confusionMatrix(data$admit, prob, threshold = .2)
 
 
 print(summary(am.data))
+
+
+#----steps-----
+head(data)
+mylogit = glm(admit ~ gre + gpa + rank, data = data, family = "binomial")
+#predict for original values
+(p3 = predict(mylogit, newdata=data, type='response'))
+(predicted3 = factor(ifelse(p3 < .5, 0, 1)))
+(actual = data$admit)
+df = data.frame(predicted3, actual)
+head(df)
+caret::confusionMatrix(df$predicted3, df$actual)
