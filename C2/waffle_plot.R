@@ -50,3 +50,4 @@ ggplot(data = waffle_iron(waffledata, aes_d(group=Columns)), aes(x, y, fill = gr
 
 ggplot(data = waffle_iron(waffledata, aes_d(group=Columns)), aes(x, y, fill = group)) + ggwaffle::geom_waffle(size = 1, colour = "red", aes(fill=factor(group))) 
 ?geom_waffle
+
