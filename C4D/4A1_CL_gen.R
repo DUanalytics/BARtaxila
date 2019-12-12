@@ -4,22 +4,25 @@
 library(ggplot2)
 library(dplyr)
 
+#distance between 60 and 50
 dist(c(60,50))
 #-----------
 sub1 = c(60, 50, 90, 80, 82)
-dist(sub1)
+dist(sub1)  #distance between each point
 #-------------
-library(distances) #library
+library(distances) #library for distances
 distances(sub1)
 d1 = distances(sub1)
 distance_matrix(d1, indices = NULL)
 #searches for the data point furthest from a set of query points
 max_distance_search(d1)
-# Columns in this matrix indicate queries, and rows are ordered by distances from the query.
-#1 is farthest from 3rd, 2nd also from 3rd, 3rd from 2nd, 4th from 2nd, 5th from 2nd
+sub1
+# Columns in this matrix indicate queries, and rows are ordered by distances from the query. #1 is farthest from 3rd, 2nd also from 3rd, 3rd from 2nd, 4th from 2nd, 5th from 2nd
 #---------------
 d1
 sub1 #data points
+nearest_neighbor_search(distances=d1, k=2)  #2 nearest neighbours of each point
+nearest_neighbor_search(distances=d1, k=3)
 sub1[c(1,4)] #1st and 4th data indices
 nearest_neighbor_search(distances=d1, k=1, query_indices = c(1,4))
 #1 nearest neigbour of indices 1 & 4 
@@ -54,14 +57,15 @@ my_data_points
 # Euclidean distances
 (my_distances1 <- distances(my_data_points))
 
+#marks - clustering -----
 #euclidean distance
 # 5 students with marks in 2 subjects x & y
 x = c(60, 50, 90, 80, 82)
 y = c(65, 75, 80, 76, 50)
 (marks = data.frame(x, y))
 #one subject
-dist(marks$x)
-dist(marks)  #how is this calculated
+dist(marks$x)  #for only x subject
+dist(marks)  # for both subjects
 #distance of 2nd student marks with 1st
 marks[1:2,]
 (s21 = sqrt((60-50)^2 + (65-75)^2))
@@ -77,6 +81,7 @@ library(fields)  #another package
 marks
 rdist(marks)
 
+#scaling-------
 #now lets scale that data
 x1 = c(60, 50, 90, 80, 82)
 y1 = c(400, 300, 200, 450, 170)
@@ -96,14 +101,26 @@ cbind(marks1, cluster=k1$cluster)
 k1S = kmeans(marks1scaled, centers=2)
 k1S$cluster
 cbind(marks1scaled, cluster=k1S$cluster)
+marks1$cluster = k1S$cluster
+head(marks1)
 #see the difference in grouping of 3rd row
 cbind(marks1, marks1scaled, C1=k1$cluster,C1S=k1S$cluster)
-plot(marks1$x1, marks1$y1, pch=16, fill=k1$cluster,cex=2)
-g1 <- ggplot(marks1, aes(x=x1, y=y1, color=k1$cluster)) + geom_point() + geom_point(size=5) 
+plot(marks1$x1, marks1$y1, pch=18, col=k1$cluster,cex=2)
+g1 <- ggplot(marks1, aes(x=x1, y=y1, color=cluster, shape=factor(cluster))) + geom_point() + geom_point(size=5) 
 g1
-(centers1 = as.data.frame(k1$centers))  #ggplot needs Df
-g1 + geom_point(data= centers1, aes(x=x1, y=y1, color=k1$cluster), size=52, alpha=.3, show.legend = F)
+marks1 %>% group_by(cluster) %>% summarise(x1=mean(x1), y1=mean(y1))
+g1 + geom_point(data=marks1 %>% group_by(cluster) %>% summarise(x1=mean(x1), y1=mean(y1)), size=5, shape=3, aes(x=x1, y=y1))
 
 #links
 #https://cran.r-project.org/web/packages/distances/distances.pdf
 #http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r
+
+
+
+library(tidyverse)
+
+# Assign random cluster value
+iris$cluster = sample(0:1, nrow(iris), replace=TRUE)
+
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, colour=factor(cluster))) +
+  geom_point() +   geom_point(data=iris %>%    group_by(cluster) %>%       summarise_at(vars(matches("Sepal")), mean),  size=5, shape=3) +  theme_classic()
