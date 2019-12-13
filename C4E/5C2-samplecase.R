@@ -112,3 +112,22 @@ write.csv(rules_DF, './data/myrules1.csv')
 
 #Visualisation
 plot(rules)
+
+rules
+
+plot(rules, engine = "htmlwidget")
+plot(rules, method = "matrix", engine = "htmlwidget")
+plot(rules, method = "grouped matrix", engine = "interactive")
+plot(rules, method = "graph", engine = "htmlwidget")
+inspect(rules[1])
+inspect(rules)
+itemFrequency(tdata)
+inspect(rules[5])
+inspect(rules[7])
+inspect(rules[15])
+plot(rules[5], method = "doubledecker", data = tdata)  #66% black
+plot(rules[7], method = "doubledecker", data = tdata)  #66% black
+plot(rules[15], method = "doubledecker", data = tdata) #50% black 
+
+itemFrequency(tdata)
+#area of blocks gives the support and the height of the “yes” blocks is proportional to the confidence for the rules consisting of the antecedent items marked as “yes.” Items that show a significant jump in confidence when changed from “no” to “yes” are interesting
