@@ -9,15 +9,15 @@ library(factoextra) #vis
 library(gridExtra)
 data('USArrests') 
 df <- USArrests
+head(df)
 df <- na.omit(df)  #Removing the missing values
 df <- scale(df)
 head(df)
 
 
-kmeans2 <- kmeans(df, centers = 2, nstart = 25)
-str(kmeans2)
-fviz_cluster(kmeans2, data = df)
-
+kmeans2 <- kmeans(df, centers = 2)
+#str(kmeans2)
+factoextra::fviz_cluster(kmeans2, data = df)
 
 #------------
 kmeans3 <- kmeans(df, centers = 3, nstart = 25)  #DataFlair

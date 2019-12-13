@@ -64,6 +64,7 @@ x = c(60, 50, 90, 80, 82)
 y = c(65, 75, 80, 76, 50)
 (marks = data.frame(x, y))
 #one subject
+sqrt((60-50)^2 + (65-75)^2)
 dist(marks$x)  #for only x subject
 dist(marks)  # for both subjects
 #distance of 2nd student marks with 1st
@@ -76,6 +77,11 @@ marks[3:4,]
 dist(marks) # 10.77
 #now we know how distances are calculated : this method is euclidean
 #there are other methods - Cosine, Jacquard...
+k2 = kmeans(marks, center=2)
+k2$cluster
+k2
+cbind(marks, k2$cluster)
+
 #----------
 library(fields)  #another package
 marks
