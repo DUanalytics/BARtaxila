@@ -1,8 +1,5 @@
 #AR on Placement Data
 
-glink = "https://docs.google.com/spreadsheets/d/1TL6uKWH7Iss1fr29jB51PvfAHVyalL_MbmF4s5zRcUE/edit#gid=1298119444"
-
-
 #Load Libraries 
 library(arules)
 library(arulesViz)
@@ -13,8 +10,9 @@ library(scales)
 library(gsheet)
 options(digits=2)
 
-data = as.data.frame(gsheet2tbl(glink))
+glink ="https://docs.google.com/spreadsheets/d/1TL6uKWH7Iss1fr29jB51PvfAHVyalL_MbmF4s5zRcUE/edit#gid=1345871940"
 
+data = as.data.frame(gsheet2tbl(glink))
 head(data)
 
 summary(data)
@@ -93,14 +91,13 @@ as(sort(rules1, by='lift')[1:10], 'data.frame')
 
 #subset rules
 inspect(rules1)
-table(techskills) ; table(comskills)
 rules1S1 <- subset(rules1, subset = lhs %pin% c("techskills=") & rhs %in% "select=Placed")
 inspect(rules1S1[1:5])
 #write.xlsx(as(rules1S1, 'data.frame'), 'data/placement.xlsx',row.names = F, sheetName = 'rules1S1', append = T)
 
 rules1S2 <- subset(rules1, subset = lhs %pin% c("techskills=") | lhs %in% c('comskills=Good') & rhs %in% "select=Placed" & confidence > .8 & lift > 1 )
 inspect(rules1S2) #sometimes there may no rules 
-write.xlsx(as(rules1S2, 'data.frame'), 'data/placement.xlsx',row.names = F, sheetName = 'rules1S2', append = T)
+#write.xlsx(as(rules1S2, 'data.frame'), 'data/placement.xlsx',row.names = F, sheetName = 'rules1S2', append = T)
 
 #save rules
 dfRules = data.frame(  lhs = labels(lhs(rules1)),  rhs = labels(rhs(rules1)),   rules1@quality)
@@ -152,7 +149,7 @@ plot(rulesgraph, method="paracoord", control=list(reorder=TRUE))
 plot(rulesgraph, method="grouped")
 onerule = rulesgraph[10]
 inspect(onerule)
-plot(onerule, method = "doubledecker", data = sPlacement3)
+plot(onerule, method = "doubledecker", data = data3)
 plot(onerule, method="paracoord", control=list(reorder=TRUE))
 plot(onerule, method="graph", control=list(type="items"))
 inspect(rulesgraph[1:10])
@@ -186,10 +183,10 @@ plot(notplacedrules[1:5], method="matrix", measure=c("confidence"))
 #plot(notplacedrules[1:5], method="matrix3D")
 #visualise-----
 #subset of rules with Placed Students
-placedT <- subset(sPlacement3 , items %in% "select=Placed")
-itemFrequencyPlot(placedT, topN = 25, population = sPlacement3, cex.names=.8, type='absolute')
+placedT <- subset(data3 , items %in% "select=Placed")
+itemFrequencyPlot(placedT, topN = 25, population = data3, cex.names=.8, type='absolute')
 #dotted lines show for full poplulation, bars for current subset
-itemFrequencyPlot(placedT, topN = 25, population = sPlacement3, lift=TRUE, cex.names=.8)
+itemFrequencyPlot(placedT, topN = 25, population = data3, lift=TRUE, cex.names=.8)
 #positive, neutral or negative correlation
 
 
