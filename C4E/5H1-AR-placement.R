@@ -8,13 +8,13 @@ library(dplyr)
 library(xlsx)
 library(scales)
 library(gsheet)
-options(digits=2)
+options(digits=4)
 
 glink ="https://docs.google.com/spreadsheets/d/1TL6uKWH7Iss1fr29jB51PvfAHVyalL_MbmF4s5zRcUE/edit#gid=1345871940"
 
 data = as.data.frame(gsheet2tbl(glink))
 head(data)
-
+dim(data)
 summary(data)
 sapply(data, class)
 
@@ -28,6 +28,7 @@ head(data[, c('cgpa','CGPA','placementtest', 'placementGrade', 'salary', 'salLev
 head(data)
 str(data)
 data2 <- data %>% select(-c('rollno','cgpa','placementtest', 'salary'))
+head(data2)
 names(data2)
 sapply(data2, class)
 data2 <- lapply(data2, as.factor)
@@ -36,6 +37,7 @@ data2 <- data %>% filter(OO == 'N' & HS == 'N') %>% select(-c(rollno, cgpa, sala
 sapply(data2, class)  #check all to be category
 class(data2)
 data2 <- data2 %>%  mutate_if(sapply(data2, is.character), as.factor)
+sapply(data2, class)
 #data ready for AR
 
 #Visualisation------
@@ -43,14 +45,18 @@ ggplot(data2, aes(x=sdiscipline, fill=select)) + geom_bar(stat='count', position
 
 
 #-------
+#5000 - those who did participate
 #convert to transaction format
 data3 <- as(data2, 'transactions')
-
+data3
+data[1,]
+data2[1,]
+inspect(data3[1])
 #frequent itemsets
 fset1 <- eclat(data3, parameter= list(support=.04), control=list( verbose=F))
 fset1
 inspect(fset1[1:10])
-
+3240*.04
 #write.xlsx(as(fset1[1:50],'data.frame'), 'data/placement.xlsx',row.names = F, sheetName = 'fset1', append=T)
 
 fset1b <- eclat(data3, parameter= list(support=.04, minlen=4, maxlen=6), control=list( verbose=F))
@@ -78,9 +84,9 @@ itemFrequencyPlot(select.placed,  population = data3, support = 0.12, lift = TRU
 apriori(data3, parameter= list(support=.15, confidence=.6, minlen=2, maxlen=6))
 
 rules1 <- apriori(data3, parameter= list(support=.15, confidence=.6, minlen=2, maxlen=6), control=list( verbose=F))
-
+.1571 * 3240
 summary(rules1)
-inspect(rules1[1:5])
+inspect(rules1[10:15])
 labels(rules1[1:5])
 rules1
 #write.xlsx(as(rules1[1:50], 'data.frame'), 'data/placement.xlsx',row.names = F, sheetName = 'rules1', append = T)
