@@ -1,5 +1,9 @@
 # Dates in R
 
+Sys.timezone()## [1] "Asia/Calcutta"
+Sys.Date() ## [1] "2019-xx-xx"
+Sys.time() ## [1] "20xx-xx-xx xx:xx:x IST"
+
 #Date Classess
 
 #Date- This is the class to use if you have only dates, but no times, in your data.
@@ -58,7 +62,9 @@ unclass(dt2)
 dt2 - as.Date("1970-01-01")
 ## Time difference of 15543 days from Reference Date
 
-
+#Multiple Dates
+x <- c("2015-07-01", "2015-08-01", "2015-09-01")
+as.Date(x)
 #Time----------------------
 #POSIXct:If you have times in your data, this is usually the best class to use.
 
@@ -150,3 +156,6 @@ detach("package:chron", unload = TRUE)
 # When you have times, POSIXct is usually the best,
 # but POSIXlt enables easy extraction of specific components
 # and chron is simplest when you don’t need to deal with timezones and daylight savings time.
+
+
+#https://www.r-bloggers.com/using-dates-and-times-in-r/

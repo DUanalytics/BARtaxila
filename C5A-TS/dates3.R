@@ -59,68 +59,94 @@ with_tz(tm1.lub, "America/Los_Angeles")
 #change the time zone of an instant (keeping the same clock time):
 force_tz(tm1.lub, "America/Los_Angeles")
 ## [1] "2013-07-24 23:55:26 PDT"
-some calculations with instants. Note that the units are seconds:
-  
-  tm2.lub - tm1.lub
-## Time difference of 8.611 hours
-tm2.lub > tm1.lub
-## [1] TRUE
-tm1.lub + 30
-## [1] "2013-07-24 23:55:56 UTC"
-An interval is the span of time that occurs between two specified instants.
 
+#some calculations with instants. Note that the units are seconds:
+tm2.lub - tm1.lub
+
+tm2.lub > tm1.lub
+
+tm1.lub + 30  #seconds
+
+#An interval is the span of time that occurs between two specified instants.
 in.bed <- as.interval(tm1.lub, tm2.lub)
 in.bed
-## [1] 2013-07-24 23:55:26 UTC--2013-07-25 08:32:07 UTC
-Check whether a certain instant occured with a specified interval:
-  
-  tm3.lub %within% in.bed
-## [1] TRUE
-tm4.lub %within% in.bed
-## [1] FALSE
-determine whether two intervals overlap:
-  
-  daylight <- as.interval(ymd_hm("2013-07-25 06:03"), ymd_hm("2013-07-25 20:23"))
-daylight
-## [1] 2013-07-25 06:03:00 UTC--2013-07-25 20:23:00 UTC
-int_overlaps(in.bed, daylight)
-## [1] TRUE
-A duration is a time span not anchored to specific start and end times. It has an exact, fixed length, and is stored internally in seconds.
 
-create some durations:
+#Check whether a certain instant occured with a specified interval:
+tm3.lub
+tm3.lub %within% in.bed
+
+tm4.lub %within% in.bed
+
+#determine whether two intervals overlap:
+daylight <- as.interval(ymd_hm("2013-07-25 06:03"), ymd_hm("2013-07-25 20:23"))
+daylight
+int_overlaps(in.bed, daylight)
+
+#A duration is a time span not anchored to specific start and end times. It has an exact, fixed length, and is stored internally in seconds.
+#create some durations:
   
-  ten.minutes <- dminutes(10)
+ten.minutes <- dminutes(10)
 ten.minutes
-## [1] "600s (~10 minutes)"
+
 five.days <- ddays(5)
 five.days
-## [1] "432000s (~5 days)"
+
 one.year <- dyears(1)
 one.year
-## [1] "31536000s (~365 days)"
+
 as.duration(in.bed)
-## [1] "31001s (~8.61 hours)"
-arithmatic with durations:
+
+#arithmatic with durations:
   
-  tm1.lub - ten.minutes
-## [1] "2013-07-24 23:45:26 UTC"
+tm1.lub - ten.minutes
+
 five.days + dhours(12)
-## [1] "475200s (~5.5 days)"
+
 ten.minutes/as.duration(in.bed)
-## [1] 0.01935
-A period is a time span not anchored to specific start and end times, and measured in units larger than seconds with inexact lengths. create some periods:
+
+#A period is a time span not anchored to specific start and end times, and measured in units larger than seconds with inexact lengths. create some periods:
   
-  three.weeks <- weeks(3)
+three.weeks <- weeks(3)
 three.weeks
-## [1] "21d 0H 0M 0S"
+
 four.hours <- hours(4)
 four.hours
-## [1] "4H 0M 0S"
-arithmatic with periods:
-  
-  tm4.lub + three.weeks
-## [1] "2013-08-16 UTC"
+
+#arithmatic with periods:
+tm4.lub + three.weeks
+
 sabbatical <- months(6) + days(12)
 sabbatical
-## [1] "6m 12d 0H 0M 0S"
+
 three.weeks/sabbatical
+
+
+#The clock has a circular scale, which ends where it begins, so we need to use circular statistics. (For more info on circular statistics see http://en.wikipedia.org/wiki/Mean_of_circular_quantities.)
+
+#Get the package, psych.
+
+require(psych) 
+
+(bed.times = c(tm1.lub, tm2.lub))
+mean(bed.times)  #will not work
+pysch::circadian.mean(bed.times)
+
+#----
+sleep <- data.frame(bed.time = ymd_hms("2013-09-01 23:05:24", "2013-09-02 22:51:09",  "2013-09-04 00:09:16", "2013-09-04 23:43:31", "2013-09-06 00:17:41", "2013-09-06 22:42:27",  "2013-09-08 00:22:27"), rise.time = ymd_hms("2013-09-02 08:03:29", "2013-09-03 07:34:21", "2013-09-04 07:45:06", "2013-09-05 07:07:17", "2013-09-06 08:17:13", "2013-09-07 06:52:11", "2013-09-08 07:15:19"), sleep.time = dhours(c(6.74, 7.92, 7.01, 6.23, 6.34, 7.42, 6.45)))
+sleep
+
+sleep$efficiency <- round(sleep$sleep.time/(sleep$rise.time - sleep$bed.time) * 100, 1)
+sleep
+colMeans(sleep)  # doesn't work
+circadian.mean(hour(sleep$bed.time) + minute(sleep$bed.time)/60 + second(sleep$bed.time)/3600)
+
+circadian.mean(hour(sleep$rise.time) + minute(sleep$rise.time)/60 + second(sleep$rise.time)/3600)
+mean(sleep$sleep.time)/3600
+
+par(mar = c(5, 4, 4, 4))
+plot(round_date(sleep$rise.time, "day"), sleep$efficiency, type = "o", col = "blue", xlab = "Morning", ylab = NA)
+par(new = TRUE)
+plot(round_date(sleep$rise.time, "day"), sleep$sleep.time/3600, type = "o",  col = "red", axes = FALSE, ylab = NA, xlab = NA)
+axis(side = 4)
+mtext(side = 4, line = 2.5, col = "red", "Sleep duration")
+mtext(side = 2, line = 2.5, col = "blue", "Sleep efficiency")
