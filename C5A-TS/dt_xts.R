@@ -50,9 +50,9 @@ nyears(xts5)
 time(xts5)
 
 #export
-data_xts <- as.xts(matrix)
-tmp <- tempfile()
-write.zoo(data_xts,sep=",",file=tmp)
+#data_xts <- as.xts(matrix)
+#tmp <- tempfile()
+#write.zoo(data_xts,sep=",",file=tmp)
 
 #replace
 xts2[dates] <- 0 
