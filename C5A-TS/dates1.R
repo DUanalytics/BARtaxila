@@ -61,6 +61,10 @@ three.months
 unclass(dt2)
 dt2 - as.Date("1970-01-01")
 ## Time difference of 15543 days from Reference Date
+# use a different origin, for instance imp
+as.Date(1, origin = "2019-01-01")
+dt2
+as.Date(18184, origin = "1970-01-01")
 
 #Multiple Dates
 x <- c("2015-07-01", "2015-08-01", "2015-09-01")
@@ -159,3 +163,4 @@ detach("package:chron", unload = TRUE)
 
 
 #https://www.r-bloggers.com/using-dates-and-times-in-r/
+#http://biostat.mc.vanderbilt.edu/wiki/pub/Main/ColeBeck/datestimes.pdf
