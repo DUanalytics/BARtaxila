@@ -26,6 +26,8 @@ forecast::forecast(TS_delhi,h=10)
 1/365  #day into decimal
 #
 
+#Exp Smoothening
+forecast::Holt  HoltWinters(TS_delhi, h=8)
 
 
 require(smooth)

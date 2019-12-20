@@ -86,3 +86,9 @@ start(stocks); end(stocks)
 #https://cran.r-project.org/web/packages/timeSeries/vignettes/timeSeriesPlot.pdf
 #https://www.codingfinance.com/post/2018-03-27-download-price/
 #https://jangorecki.gitlab.io/data.table/library/xts/html/apply.monthly.html
+
+
+
+
+library(zoo)
+rollmean(c(4,5,4,6), 3)

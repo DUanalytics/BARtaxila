@@ -1,4 +1,6 @@
 #Stock Market Analysis
+#https://www.quandl.com/tools/r
+
 
 library(Quandl)
 library(tidyverse)
