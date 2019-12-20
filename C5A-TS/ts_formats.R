@@ -1,5 +1,5 @@
 #format specified
-
+ 
 %S	second (00-59)
 %M	minute (00-59)
 %l	hour, in 12-hour clock (1-12)
