@@ -14,3 +14,4 @@
 %B	month, full (January-December)
 %y	year, without century (00-99)
 %Y	year, with century (0000-9999)
+%D  date in mm/dd/yy

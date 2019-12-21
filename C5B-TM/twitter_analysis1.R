@@ -1,11 +1,11 @@
 
 # load twitter library - the rtweet library is recommended now over twitteR
-library(rtweet)
 # plotting and pipes - tidyverse!
 library(ggplot2)
 library(dplyr)
-# text mining library
+# text mining library/ install
 library(tidytext)
+library(rtweet) 
 
 # whatever name you assigned to your created app
 appname <- "DUtwitterProject"
@@ -27,8 +27,8 @@ twitter_token <- create_token(
 get_token()
 #search will Returns Twitter statuses matching a user provided search query. ONLY RETURNS DATA FROM THE PAST 6-9 DAYS. To return more than 18,000 statuses in a single call, set "retryonratelimit" to TRUE.
 
-searchString1 = '#sirmaur'   # change this to see others eg analytics...
-## search for 50 tweets using the #sirmaur hashtag
+#searchString1 = '#sirmaur'   # change this to see others eg analytics
+searchString1 = '#businessanalytics'
 tweets1 <- search_tweets(q = searchString1, n = 50)
 # view the first 3 rows of the dataframe
 head(tweets1[1:5], n = 3)
@@ -38,16 +38,16 @@ tweets1$text  #tweet
 
 #Taxila_B_school
 #https://twitter.com/search?q=%23ISupportCAA_NRC
-searchString2 = '#ISupportCAA_NRC'
+searchString2 = "#IsupportCAA_NRC"
 tweets2 <- search_tweets(q = searchString2, n = 50)
 tweets2
 tweets2$text 
-
+    
 # find recent tweets but ignore retweets 
 tweets1B <- search_tweets(searchString1, n = 50, include_rts = FALSE)
 # view top 2 rows of data
 head(tweets1B[1:5], n = 2)
-
+?search_tweets
 #screen name : who tweeted
 head(tweets1B$screen_name)
 unique(tweets1B$screen_name)
@@ -57,7 +57,7 @@ users1 <- search_users(searchString1, n = 20)
 users1[1:5]
 
 # how many locations are represented
-length(unique(users$location))
+length(unique(users1$location))
 ## [1] 311
 
 users1 %>%  ggplot(aes(location)) + geom_bar() + coord_flip() +  labs(x = "Count",   y = "Location",  title = "Twitter users - unique locations ")
@@ -81,7 +81,7 @@ head(tweets2[1:5], n = 3)
 searchString3 = 'dupadhyaya'  #change it your twitter id
 tweets3 <- search_tweets(q = searchString3, n=100, retryonratelimit = T)
 tweets3  #there may be no data
-
+tweets3$text
 
 searchString4 = "businessanalytics"
 tweets4 <- search_tweets(searchString4, n=50,lang="en")
@@ -179,3 +179,4 @@ usrs
 #If you’d like to post Twitter statuses, follow or unfollow accounts, and/or read your direct messages, you’ll need to create your own Twitter app
 #To create your own Twitter app, follow the instructions in the authorization vignette on obtaining and using access tokens
 #https://rtweet.info/articles/auth.html
+mt
