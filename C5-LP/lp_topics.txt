@@ -1,0 +1,8 @@
+#Lp Solve
+
+
+https://stackoverflow.com/questions/31813686/lpsolve-in-r-with-character-and-column-sum-contraints
+
+https://gigadom.in/tag/lpsolveapi/
+
+https://www.londonr.org/wp-content/uploads/sites/2/presentations/LondonR_-_Practical_Optimization_-_Richard_Saldanha_-_20111206.pdf
