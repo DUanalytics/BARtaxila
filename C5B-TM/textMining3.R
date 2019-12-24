@@ -4,11 +4,8 @@
 library(tm)
 library(wordcloud)
 library(RColorBrewer)
-link1 = "https://raw.githubusercontent.com/DUanalytics/rAnalytics/master/78-textdocs/vit.txt"
-speech_txt = readLines(link1)
-speech_txt
-link2 ="https://successfulsocieties.princeton.edu/sites/successfulsocieties/files/TT_CleanIndia_Final.txt"
 #Now in order to process or clean the text using tm package, you need to first convert this plain text data into a format called corpus which can then be processed by the tm package. A corpus is a collection of documents (although in our case we only have one).Following is the command to convert .txt file into a corpus. 
+
 text = "Do not let anyone or anything outside of your own control tell you or suggest to you what will make you happy. That decision of what is happiness is up to you and you alone to create and cherish"
 speech <- Corpus(VectorSource(text))
 #speech <- Corpus(VectorSource(speech_txt))
