@@ -5,8 +5,12 @@ library(adabag)
 library(rpart)
 library(caret)
 library(rpart.plot)
+library(gsheet)
 
-bank.df <- read.csv('data/UniversalBank.csv')
+#load from csv file or google sheet
+#bank.df <- read.csv('data/UniversalBank.csv')
+link = "https://docs.google.com/spreadsheets/d/1Lt07TTh5jzbnDMgKYoQ0XLAIa-nZyNFep_Hm-owHJtU/edit#gid=46020287"
+bank.df <- as.data.frame(gsheet2tbl(link))
 head(bank.df)
 bank.df$Personal.Loan <- as.factor(bank.df$Personal.Loan)
 #parition data
@@ -83,7 +87,17 @@ table(pred_bg)
 confusionMatrix(factor(pred_bg), factor(test.df$Personal.Loan))
 #Bagging. Building multiple models (typically of the same type) from different subsamples of the training dataset
 
+
+#ensemble 
+library(randomForest)
+rf <- randomForest(as.factor(Personal.Loan) ~ . , data =train.df, ntree=500, mtry=4, nodesize=5, importance=T)
+varImpPlot(rf, type=1)
+rf.pred <- predict(rf, test.df)
+confusionMatrix(factor(rf.pred), factor(test.df$Personal.Loan))
+#98.4
+
 #videos
+https://www.youtube.com/watch?v=AiePAlZy_t8
 https://www.youtube.com/watch?v=aBYC_n7DNqI
 https://www.youtube.com/watch?v=6q63Fwx33sg
 

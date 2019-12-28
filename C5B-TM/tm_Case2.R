@@ -2,13 +2,13 @@
 
 library(zip)
 
-fileloc = "E:/analytics/dataSets/DMBAR/AutoAndElectronics.zip"
-
-corp1 <- Corpus(ZipSource("E:/analytics/dataSets/DMBAR/AutoAndElectronics.zip", recursive=T))
+#fileloc = "E:/analytics/dataSets/DMBAR/amz.zip"
+fileloc = "https://drive.google.com/file/d/1il8xDmK04bHz7ozWcT9uEagjBqlZxSLZ/view?usp=sharing"
+corp1 <- Corpus(ZipSource(fileloc, recursive=T))
 corp1
 inspect(corp1)
 #array of records tables
-label <- c(rep(1,1000), rep(0,1000))
+#label <- c(rep(1,1000), rep(0,1000))
 
 corp2 <- tm_map(corp1, stripWhitespace)
 corp3 <- tm_map(corp2, removePunctuation)
@@ -20,7 +20,11 @@ tdm1 <- TermDocumentMatrix(corp5)
 tfidf <- weightTfIdf(tdm1)
 inspect(tfidf)
 
+#categorising documents into concepts : dim=3
+#https://en.wikipedia.org/wiki/Latent_semantic_analysis
 library(lsa)
-lsa.tfidf <- lsa(tfidf, dim=20)
-inspect(lsa.tfidf)
-words.df <- ad.data.frame(as.matrix())
+lsa.tfidf <- lsa(tfidf, dim=3)
+lsa.tfidf
+words.df <- as.data.frame(as.matrix(lsa.tfidf$dk))
+head(words.df)
+
