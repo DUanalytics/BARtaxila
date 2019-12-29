@@ -1,7 +1,7 @@
 #Exponential Smoothening in R
 
 #https://johannesmehlem.com/blog/exponential-smoothing-time-series-forecasting-r/
-#Exponential smoothing is one of the most popular time series forecasting techniques. It uses historical data with its inherent characteristics (more on that later) as input for the forecasting model, which means that time series forecasting techniques like this are generally most suitable and accurate if:
+#Exponential smoothing is one of the most popular time series forecasting techniques. It uses historical data with its inherent characteristics as input for the forecasting model, which means that time series forecasting techniques like this are generally most suitable and accurate if:
 # sufficient historical data is available,
 # the forecasted metric is relatively stable and does not underly extreme fluctuations,
 #the forecasting horizon is short-term such as the next quarter or potentially six months.
