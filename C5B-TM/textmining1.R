@@ -1,4 +1,4 @@
-# Text Mining
+# Text Mining - Not Completed
 #Load Libraries
 library(plyr)
 library(ggplot2)

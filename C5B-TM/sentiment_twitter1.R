@@ -87,6 +87,6 @@ head(category_senti2)
 
 #----
 table(category_senti)
-
+barplot(table(category_senti))
 #----
 
