@@ -70,3 +70,56 @@ mtcars %>%   gather(-mpg, -hp, -cyl, key = "var", value = "value") %>%    head()
 mtcars %>%   gather(-mpg, -hp, -cyl, key = "var", value = "value") %>%   ggplot(aes(x = value, y = mpg, color = hp, shape = factor(cyl))) + geom_point() +   facet_wrap(~ var, scales = "free") +   theme_bw()
 
 mtcars %>%   gather(-mpg, key = "var", value = "value") %>%   ggplot(aes(x = value, y = mpg)) +   geom_point() +   stat_smooth() +   facet_wrap(~ var, scales = "free") +   theme_bw()
+
+
+
+#xtab
+DF <- as.data.frame(UCBAdmissions)
+## Now 'DF' is a data frame with a grid of the factors and the counts
+## in variable 'Freq'.
+DF
+## Nice for taking margins ...
+xtabs(Freq ~ Gender + Admit, DF)
+## And for testing independence ...
+summary(xtabs(Freq ~ ., DF))
+
+DN <- DF
+DN
+DN[cbind(6:9, c(1:2,4,1))] <- NA
+DN
+# 'na.fail' should fail :
+tools::assertError(  xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
+xtabs(Freq ~ Gender + Admit, DN)
+xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
+xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # ==> count NAs
+
+## Create a nice display for the warp break data.
+warpbreaks
+warpbreaks$replicate <- rep_len(1:9, 54)
+ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
+
+ftable(gear ~ cyl, data=mtcars)
+ftable(gear + am ~ cyl, data=mtcars)
+ftable(gear + am ~ cyl + vs, data=mtcars)
+ftable(gear + am ~ cyl + vs + carb, data=mtcars)
+
+xtabs(gear ~ cyl, data=mtcars) #incorrect
+xtabs(gear + am ~ cyl, data=mtcars) #incorrect
+xtabs(~ gear + cyl, data=mtcars)
+xtabs(~ gear + cyl + am, data=mtcars)
+xtabs(mpg ~ gear + am, data=mtcars)
+?xtabs
+#On the left hand side, one may optionally give a vector or a matrix of counts; in the latter case, the columns are interpreted as corresponding to the levels of a variable. 
+xtabs(cbind(gear,am) ~ cyl, data=mtcars)
+
+
+ftable(xtabs(cbind(gear,am) ~ cyl, data=mtcars))
+
+ftable(gear + am ~ cyl + vs, data=mtcars)
+ftable(gear + am ~ cyl + vs + carb, data=mtcars)
+
+table(mtcars$gear, mtcars$am, mtcars$cyl)
+library(gmodels)
+CrossTable(mtcars$gear, mtcars$cyl)
+CrossTable(mtcars$gear, mtcars$cyl)
