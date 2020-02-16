@@ -45,10 +45,10 @@ diff(three.dates[c(1,3)])
 #------
 dt2
 #create a sequence of dates:
-six.weeks <- seq(dt2, length = 6, by = "week")
+six.weeks <- seq(dt2, length = 6, by = "week")  #diff of 1 week
 six.weeks
 
-six.weeks <- seq(dt2, length = 6, by = 14) #biweekly
+six.weeks <- seq(dt2, length = 6, by = 14) #biweekly (14 days)
 six.weeks
 
 six.weeks <- seq(dt2, length = 6, by = "2 weeks")
@@ -60,15 +60,16 @@ three.months
 #see the internal integer representation
 unclass(dt2)
 dt2 - as.Date("1970-01-01")
-## Time difference of 15543 days from Reference Date
+## Time difference of x days from Reference Date
 # use a different origin, for instance imp
 as.Date(1, origin = "2019-01-01")
 dt2
-as.Date(18184, origin = "1970-01-01")
+as.Date(10, origin = "1970-01-01")  #10 days from origin
 
 #Multiple Dates
 x <- c("2015-07-01", "2015-08-01", "2015-09-01")
 as.Date(x)
+
 #Time----------------------
 #POSIXct:If you have times in your data, this is usually the best class to use.
 
@@ -102,6 +103,7 @@ tm3 - tm1  #diff in time zones
 Sys.time()  #now
 
 #see the internal integer representation:
+tm1
 unclass(tm1)
 difftime(tm1, as.POSIXct("2019-12-22 06:05:00"), units = "mins")
 difftime(tm1, as.POSIXct("2019-12-22 06:05:00"), units = "hours")
@@ -114,9 +116,10 @@ difftime(tm1, as.POSIXct("2019-12-22 06:05:00"), units = "hours")
 tm1.lt <- as.POSIXlt("2019-12-22 13:30:10")
 tm1.lt
 
-unclass(tm1.lt)  #see the parts
+unclass(tm1.lt)  #see the parts/ attributes of TS object
 unlist(tm1.lt)  #horizontally
-
+tm1.lt;tm1
+lapply(c(tm1.lt, tm1), FUN=unlist)
 #extract componants of a time object:
 tm1.lt$sec
 tm1.lt$wday  #start on Sat
@@ -124,8 +127,7 @@ tm1.lt$wday  #start on Sat
 #truncate or round off the time:
 trunc(tm1.lt, "days")  #remove time
 
-trunc(tm1.lt, "mins") #approx minutes, round seconds
-
+trunc(tm1.lt, "mins") #trunc/approx to minutes, round seconds
 
 #C4:chron----
 #This class is a good option when you don’t need to deal with timezones. It requires the package chron.

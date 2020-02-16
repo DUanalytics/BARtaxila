@@ -7,6 +7,7 @@ library(dplyr)
 str(hflights)
 head(hflights)
 ?hflights
+?lakers
 head(lakers)
 str(lakers$date)
 

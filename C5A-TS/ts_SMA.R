@@ -10,7 +10,7 @@ delhi
 #daily data
 (TS_delhi = ts(data=delhi, start=c(2019), freq=365))
 (TS_delhi = ts(data=delhi, start=c(2019,1), end=c(2019,365),freq=365))
-
+TS_delhi
 plot(TS_delhi)
 
 #Simple Moving
@@ -25,11 +25,18 @@ tail(TS_delhi)
 forecast::forecast(TS_delhi,h=10)
 1/365  #day into decimal
 #
-
+?forecast::forecast
 #Exp Smoothening
-forecast::Holt  HoltWinters(TS_delhi, h=8)
-
-
+library(forecast)
+?WWWusage #users per min connected to internet
+head(WWWusage)
+WWWusage
+WWWusage %>% forecast %>% plot
+window(WWWusage, end=60)  #last 60 records
+fit <- ets(window(WWWusage, end=60))
+fit
+fc <- forecast(WWWusage, model=fit)
+fc
 require(smooth)
 require(Mcomp)
 
